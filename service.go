@@ -32,3 +32,6 @@ func (svc StringService) UpperCase(str string) (string, error) {
 func (svc StringService) Count(str string) int {
 	return len(str)
 }
+
+// ServiceMiddleware is a chainable behavior modifier for StringService.
+type ServiceMiddleware func(IStringService) IStringService

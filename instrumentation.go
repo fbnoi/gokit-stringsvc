@@ -14,6 +14,12 @@ type instrumentingMiddleWare struct {
 	next           IStringService
 }
 
+func instrumentingMiddleware(requestCount metrics.Counter, requestLatency metrics.Histogram, countResult metrics.Histogram) ServiceMiddleware {
+	return func(next IStringService) IStringService {
+		return instrumentingMiddleWare{requestCount, requestLatency, countResult, next}
+	}
+}
+
 func (mw instrumentingMiddleWare) UpperCase(str string) (out string, err error) {
 	defer func(begin time.Time) {
 		lvs := []string{"method", "UpperCase", "error", fmt.Sprint(err != nil)}

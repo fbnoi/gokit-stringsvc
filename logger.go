@@ -6,6 +6,12 @@ import (
 	"github.com/go-kit/kit/log"
 )
 
+func loggingMiddleware(logger log.Logger) ServiceMiddleware {
+	return func(next IStringService) IStringService {
+		return LoggingMiddleware{logger: logger, next: next}
+	}
+}
+
 // LoggingMiddleware LoggingMiddleware
 type LoggingMiddleware struct {
 	logger log.Logger
